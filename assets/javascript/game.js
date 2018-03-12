@@ -2,14 +2,17 @@
 //establlish array and variables
 var options = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",];
 var userChoice = [];
-var randomCharacter;
+var randomCharacterVar;
 var computerChoice;
 var wins = 0;
 var losses = 0; 
 var guessesLeft = 9;
-var guessesSoFar = [];
+var guessesSoFarVar = [];
 
-console.log(options);
+// console.log(options);
+
+//call function for computer choice
+randomCharacter();
 
 // //user chooses one character a-z and we capture those choices
 document.onkeyup = function(event) {
@@ -19,25 +22,63 @@ document.onkeyup = function(event) {
         userChoice = userChoice.toLowerCase();
 
         console.log(userChoice);
+
+    // //compare choices and determine a win or loss or tie - this is Lisa's code to emulate perhaps
+    if (userChoice === computerChoice) {
+        alert("I can't believe it...you guessed it, my darling!");
+        wins = wins + 1;
+        document.getElementById("wins").innerHTML = wins;
+        randomCharacter();
+        guessesLeft = 9;
+        guessesSoFarVar = "Let's go again...you haven't guessed anything this time around";
+        document.getElementById("guessesSoFar").innerHTML = guessesSoFarVar;
+        guessesSoFarVar = [];
+    } else if (guessesLeft > 0){
+        //CHRIS FEEDBACKpush and then loop to display
+        guessesSoFarVar.push(" " + userChoice);
+        document.getElementById("guessesSoFar").innerHTML = guessesSoFarVar;
+        guessesLeft = guessesLeft - 1;
+        document.getElementById("guessesLeft").innerHTML = guessesLeft;
+        
+        // console.log(userChoice); 
+    }
+    else {
+        // increment losses print loses to screen 
+        losses = losses + 1;
+        document.getElementById("losses").innerHTML = losses;
+
+        //restart game
+        randomCharacter();
+        //reset guesses left to 9
+        guessesLeft = 9;
+        guessesSoFarVar = "Let's go again...you haven't guessed anything this time around";
+        document.getElementById("guessesSoFar").innerHTML = guessesSoFarVar;
+        guessesSoFarVar = [];
+        
+    }
+    // console.log(wins);    
     }
     
+
+
+
 // //computer chooses one random character a-z - used math random formula to create computer choice (computer to make a choice)
-// // function random_character() {
-    var randomCharacter = Math.floor(Math.random() * 
+function randomCharacter() {
+    var randomNumber = Math.floor(Math.random() * 
         options.length);
-    var computerChoice = options[randomCharacter];
+    computerChoice = options[randomNumber];
     
     console.log(computerChoice);
+}
 
 
-// //compare choices and determine a win or loss or tie - this is Lisa's code to emulate perhaps
-    if (userChoice == computerChoice) {
-        wins = wins + 1;
-    } else {
-        //CHRIS FEEDBACKpush and then loop to display
-        document.getElementById("guessesSoFar").innerHTML = userChoice;; 
-    }
-    console.log(wins);
+//Mar 12 todo:
+// use Win logic to build Losses logic
+// update loss and guesses left html to span
+//use win logic to build guess so far (DECREMENT) another IF ELSE statement
+
+
+
 
 //CHRIS FEEDBACK >> indexOf to
 //span that you modify the text of
